@@ -1,0 +1,39 @@
+CREATE TABLE groceryEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    count INTEGER NOT NULL,
+    createdAt INTEGER NOT NULL,
+    imagePath TEXT
+);
+
+getGroceries:
+SELECT *
+FROM groceryEntity
+ORDER BY createdAt DESC;
+
+getRecentGroceries:
+SELECT *
+FROM groceryEntity
+ORDER BY createdAt DESC
+LIMIT :amount;
+
+insertGroceryEntity:
+INSERT OR REPLACE
+INTO groceryEntity(
+    id,
+    title,
+    description,
+    count,
+    createdAt,
+    imagePath
+) VALUES (?,?,?,?,?,?);
+
+deleteGroceryById:
+DELETE FROM groceryEntity
+WHERE id = :id;
+
+getGroceryById:
+SELECT *
+FROM groceryEntity
+WHERE id = :id;
