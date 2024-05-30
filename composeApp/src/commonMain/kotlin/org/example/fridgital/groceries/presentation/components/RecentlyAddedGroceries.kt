@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.example.fridgital.groceries.domain.Grocery
@@ -26,6 +27,7 @@ fun RecentlyAddedGroceries(
         if (groceries.isNotEmpty()) {
             Text(
                 text = "Zuletzt hinzugefügt",
+                color = Color(0xFF333333),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 16.dp, 16.dp, 16.dp),
@@ -33,7 +35,8 @@ fun RecentlyAddedGroceries(
             )
         }
         LazyRow(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             contentPadding = PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
