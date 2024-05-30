@@ -10,9 +10,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -23,13 +26,18 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Remove
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.example.fridgital.core.presentation.CustomBottomSheet
 import org.example.fridgital.groceries.domain.Grocery
 import org.example.fridgital.groceries.presentation.GroceryListEvent
@@ -61,61 +69,92 @@ fun AddGrocerySheet(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(
-                        onClick = {
-                            onEvent(GroceryListEvent.DismissGrocery)
-                        },
-                        modifier = Modifier
-                            .size(48.dp)
-                            .background(
-                                color = Color(0xFFEFEFEF),
-                                shape = RoundedCornerShape(24.dp)
-                            )
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Remove,
-                            contentDescription = "Subtrahieren",
-                            tint = Color.Black
-                        )
+                    if (newGrocery != null) {
+                        if (newGrocery.count > 1) {
+                            // decrement count
+                            IconButton(
+                                onClick = {
+                                    onEvent(GroceryListEvent.OnGroceryCountSub(newGrocery.count))
+                                },
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .background(
+                                        color = Color(0xFFEFEFEF),
+                                        shape = RoundedCornerShape(24.dp)
+                                    )
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Remove,
+                                    contentDescription = "Subtrahieren",
+                                    tint = Color.Black
+                                )
+                            }
+                        } else {
+                            // delete grocery
+                            IconButton(
+                                onClick = {
+                                    onEvent(GroceryListEvent.DeleteGrocery)
+                                },
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .background(
+                                        color = Color(0xFFF1C0C0),
+                                        shape = RoundedCornerShape(24.dp)
+                                    )
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Delete,
+                                    contentDescription = "Delete",
+                                    tint = Color(0xFFCD5C5C)
+                                )
+                            }
+                        }
                     }
 
-                    if (newGrocery?.photoBytes == null) {
-                        Box(
-                            modifier = Modifier
-                                .size(150.dp)
-                                .clip(RoundedCornerShape(15))
-                                .background(Color.LightGray)
-                                .clickable {
-                                    onEvent(GroceryListEvent.OnAddPhotoClicked)
-                                }
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFF999999),
-                                    shape = RoundedCornerShape(15)
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Rounded.Add,
-                                contentDescription = "Bild hinzufügen",
-                                tint = Color.Black,
-                                modifier = Modifier.size(40.dp)
+                    Box(
+                        contentAlignment = Alignment.TopStart
+                    ) {
+                        if (newGrocery?.photoBytes == null) {
+                            Box(
+                                modifier = Modifier
+                                    .size(150.dp)
+                                    .clip(RoundedCornerShape(15))
+                                    .background(Color.LightGray)
+                                    .clickable {
+                                        onEvent(GroceryListEvent.OnAddPhotoClicked)
+                                    }
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color(0xFF999999),
+                                        shape = RoundedCornerShape(15)
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Add,
+                                    contentDescription = "Bild hinzufügen",
+                                    tint = Color.Black,
+                                    modifier = Modifier.size(40.dp)
+                                )
+                            }
+                        } else {
+                            GroceryPhoto(
+                                grocery = newGrocery,
+                                modifier = Modifier
+                                    .size(150.dp)
+                                    .clickable {
+                                        onEvent(GroceryListEvent.OnAddPhotoClicked)
+                                    }
                             )
                         }
-                    } else {
-                        GroceryPhoto(
-                            grocery =  newGrocery,
-                            modifier = Modifier
-                                .size(150.dp)
-                                .clickable {
-                                    onEvent(GroceryListEvent.OnAddPhotoClicked)
-                                }
-                        )
+                        GroceryDetailsBubble(newGrocery)
                     }
-
+                    // increment count
                     IconButton(
                         onClick = {
-                            onEvent(GroceryListEvent.DismissGrocery)
+                            if (newGrocery != null) {
+                                onEvent(GroceryListEvent.OnGroceryCountAdd(newGrocery.count))
+                            }
                         },
                         modifier = Modifier
                             .size(48.dp)
@@ -226,6 +265,48 @@ private fun GroceryTextField(
                 modifier = Modifier
                     .padding(16.dp, 8.dp)
             )
+        }
+    }
+}
+
+@Composable
+private fun GroceryDetailsBubble(
+    newGrocery: Grocery?
+) {
+    Box(
+        modifier = Modifier
+            .offset(x = (-10).dp, y = (-10).dp)
+            .height(28.dp)
+            .widthIn(min = 28.dp, max = 140.dp)
+            .background(Color.Black, shape = CircleShape)
+            .padding(horizontal = 6.dp, vertical = 6.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Row {
+            if (newGrocery?.description != "") {
+                // TODO: enable when counter logic is implemented
+                // if (grocery.count > 1) {
+                Text(
+                    text = "${newGrocery?.count} x",
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.White,
+                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                )
+                // }
+                Text(
+                    text = " ${newGrocery?.description}",
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.White,
+                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                )
+            } else {
+                Text(
+                    text = "${newGrocery.count}",
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.White,
+                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                )
+            }
         }
     }
 }

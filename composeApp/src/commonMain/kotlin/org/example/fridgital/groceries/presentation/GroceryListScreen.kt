@@ -121,7 +121,10 @@ fun GroceryListScreen(
                     }
 
                     // counter in a bubble at the top left of the FAB
-                    //if (state.groceries.isNotEmpty()) {
+                    /* TODO: enable when shopping list is implemented
+                        and fill counter in Text Composable dynamically
+                     */
+                    // if (state.groceries.isNotEmpty()) {
                         Box(
                             modifier = Modifier
                                 .align(Alignment.TopStart)
@@ -136,7 +139,7 @@ fun GroceryListScreen(
                                 style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
                             )
                         }
-                    //}
+                    // }
                 }
             }
         }
@@ -176,7 +179,7 @@ fun GroceryListScreen(
                             modifier = Modifier
                                 .weight(1f)
                                 .clickable (
-                                    onClick = { onEvent(GroceryListEvent.SelectGrocery(grocery)) },
+                                    onClick = { onEvent(GroceryListEvent.EditGrocery(grocery)) },
                                     indication = null,
                                     interactionSource = interactionSource
                                 )
