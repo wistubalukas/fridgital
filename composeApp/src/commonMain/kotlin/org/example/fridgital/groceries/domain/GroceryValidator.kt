@@ -6,7 +6,7 @@ object GroceryValidator {
 
         if (grocery.title.isBlank()) {
             result = result.copy(
-                tileError = "Title can't be empty"
+                tileError = "Titel zum speichern erforderlich."
             )
         }
         return result

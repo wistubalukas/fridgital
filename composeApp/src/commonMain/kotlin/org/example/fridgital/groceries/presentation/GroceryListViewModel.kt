@@ -40,7 +40,7 @@ class GroceryListViewModel(
                 viewModelScope.launch {
                     state.value.selectedGrocery?.id?.let { id ->
                         _state.update { it.copy(
-                            isSelectedGrocerySheetOpen = false
+                            isAddGrocerySheetOpen = false
                         ) }
                         groceryDataSource.deleteGrocery(id)
                         delay(300L)  // delay for animation
@@ -100,6 +100,18 @@ class GroceryListViewModel(
                     title = event.value
                 )
             }
+
+            is GroceryListEvent.OnGroceryCountAdd -> {
+                newGrocery = newGrocery?.copy(
+                    count = event.value + 1L
+                )
+            }
+            is GroceryListEvent.OnGroceryCountSub -> {
+                newGrocery = newGrocery?.copy(
+                    count = maxOf(1, event.value - 1L)
+                )
+            }
+
             GroceryListEvent.SaveGrocery -> {
                 newGrocery?.let { grocery ->
                     val result = GroceryValidator.validateGrocery(grocery)
