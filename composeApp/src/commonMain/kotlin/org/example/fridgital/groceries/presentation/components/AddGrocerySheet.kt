@@ -225,8 +225,7 @@ fun AddGrocerySheet(
                 )
             }
             IconButton(
-                modifier = Modifier
-                    .padding(16.dp),
+                modifier = Modifier.padding(0.dp, 16.dp),
                 onClick = {
                     onEvent(GroceryListEvent.DismissGrocery)
                 }
@@ -242,7 +241,7 @@ fun AddGrocerySheet(
 }
 
 @Composable
-private fun GroceryTextField(
+fun GroceryTextField(
     value: String,
     placeholder: String,
     error: String?,
@@ -256,7 +255,7 @@ private fun GroceryTextField(
                 Text(text = placeholder)
             },
             onValueChange = onValueChanged,
-            shape = RoundedCornerShape(20.dp),
+            shape = RoundedCornerShape(15),
             modifier = Modifier.fillMaxWidth()
         )
         if (error != null) {

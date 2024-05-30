@@ -169,7 +169,7 @@ fun GroceryListScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp, 0.dp),
+                        .padding(16.dp, 16.dp, 16.dp, 0.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     row.forEach { grocery ->
