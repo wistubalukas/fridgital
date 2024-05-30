@@ -71,8 +71,8 @@ fun GroceryListScreen(
                             onEvent(GroceryListEvent.OnAddNewGroceryClick)
                         },
                         shape = RoundedCornerShape(24.dp),
-                        backgroundColor = Color.LightGray,
-                        contentColor = Color.Black,
+                        backgroundColor = Color(0xFFEFEFEF),
+                        contentColor = Color(0xFF333333),
                         modifier = Modifier.align(Alignment.Center)
                     ) {
                         Icon(
@@ -86,7 +86,7 @@ fun GroceryListScreen(
                         modifier = Modifier
                             .align(Alignment.TopStart)
                             .size(28.dp)
-                            .background(Color.Black, shape = CircleShape)
+                            .background(Color(0xFF333333), shape = CircleShape)
                             .padding(6.dp),
                         contentAlignment = Alignment.Center
                     ) {
@@ -110,8 +110,8 @@ fun GroceryListScreen(
                             onEvent(GroceryListEvent.OnShoppingListClick)
                         },
                         shape = RoundedCornerShape(24.dp),
-                        backgroundColor = Color.LightGray,
-                        contentColor = Color.Black,
+                        backgroundColor = Color(0xFFEFEFEF),
+                        contentColor = Color(0xFF333333),
                         modifier = Modifier.align(Alignment.Center)
                     ) {
                         Icon(
@@ -129,7 +129,7 @@ fun GroceryListScreen(
                             modifier = Modifier
                                 .align(Alignment.TopStart)
                                 .size(28.dp)
-                                .background(Color.Black, shape = CircleShape)
+                                .background(Color(0xFF333333), shape = CircleShape)
                                 .padding(6.dp),
                             contentAlignment = Alignment.Center
                         ) {

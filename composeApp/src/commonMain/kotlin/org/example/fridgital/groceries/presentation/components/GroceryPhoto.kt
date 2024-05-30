@@ -38,7 +38,7 @@ fun GroceryPhoto(
     } else {
         Box(
             modifier = photoModifier
-                .background(Color(0xFF555555)),
+                .background(Color(0xFF999999)),
             contentAlignment = Alignment.Center
         ) {
             Icon(

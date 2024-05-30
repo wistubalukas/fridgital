@@ -58,7 +58,7 @@ fun GroceryListItem(
                     .align(Alignment.TopStart)
                     .height(28.dp)
                     .widthIn(min = 28.dp, max = 112.dp)
-                    .background(Color.Black, shape = CircleShape)
+                    .background(Color(0xFF333333), shape = CircleShape)
                     .padding(horizontal = 6.dp, vertical = 6.dp),
                 contentAlignment = Alignment.Center
             ) {
@@ -92,6 +92,7 @@ fun GroceryListItem(
         }
         Text(
             text = grocery.title,
+            color = Color(0xFF333333),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Center,
