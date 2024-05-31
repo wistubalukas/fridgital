@@ -22,8 +22,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -115,7 +115,7 @@ fun GroceryListScreen(
                         modifier = Modifier.align(Alignment.Center)
                     ) {
                         Icon(
-                            imageVector = Icons.Rounded.List,
+                            imageVector = Icons.AutoMirrored.Rounded.List,
                             contentDescription = "Add grocery shopping item"
                         )
                     }
@@ -134,7 +134,7 @@ fun GroceryListScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "0",
+                                text = "2",
                                 color = Color.White,
                                 style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
                             )
@@ -169,7 +169,7 @@ fun GroceryListScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp, 16.dp, 16.dp, 0.dp),
+                        .padding(16.dp, 0.dp, 16.dp, 0.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     row.forEach { grocery ->
