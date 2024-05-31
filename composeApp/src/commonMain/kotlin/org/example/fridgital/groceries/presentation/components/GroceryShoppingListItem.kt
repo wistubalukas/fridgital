@@ -95,6 +95,7 @@ fun GroceryShoppingListItem(
             ) {
                 Text(
                     text = grocery.title,
+                    fontWeight = FontWeight.SemiBold,
                     color = Color(0xFF333333),
                     overflow = TextOverflow.Ellipsis,
                     fontSize = 14.sp,
