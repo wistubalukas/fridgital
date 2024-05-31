@@ -40,6 +40,7 @@ fun GroceryPreviewItem(
             modifier = Modifier
                 .width(100.dp)
                 .padding(4.dp)
+                .height(38.dp)
         )
     }
 }
