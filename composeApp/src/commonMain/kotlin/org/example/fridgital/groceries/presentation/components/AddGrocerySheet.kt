@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
@@ -55,7 +53,9 @@ fun AddGrocerySheet(
         modifier = modifier.fillMaxWidth()
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
             contentAlignment = Alignment.TopStart
         ) {
             Column {
@@ -189,11 +189,16 @@ fun AddGrocerySheet(
                     )
                     Spacer(modifier.height(16.dp))
                     Row{
-                        Button(
+                        IconButton(
                             onClick = {
                                 onEvent(GroceryListEvent.SaveGrocery)
                             },
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFEFEFEF))
+                            modifier = Modifier
+                                .width(100.dp)
+                                .background(
+                                    color = Color(0xFFEFEFEF),
+                                    shape = RoundedCornerShape(15)
+                                )
                         ) {
                             Text(
                                 text = "Speichern",
@@ -201,11 +206,16 @@ fun AddGrocerySheet(
                             )
                         }
                         Spacer(modifier = Modifier.width(16.dp))
-                        Button(
+                        IconButton(
                             onClick = {
                                 onEvent(GroceryListEvent.DismissGrocery)
                             },
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFF1C0C0))
+                            modifier = Modifier
+                                .width(100.dp)
+                                .background(
+                                    color = Color(0xFFF1C0C0),
+                                    shape = RoundedCornerShape(15)
+                                )
                         ) {
                             Text(
                                 text = "Verwerfen",
@@ -214,7 +224,15 @@ fun AddGrocerySheet(
                         }
                     }
                 }
-                Spacer(Modifier.height(40.dp))
+                // Spacer(Modifier.height(40.dp))
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomStart)
+                    .padding(bottom = 16.dp)
+            ) {
                 RecentlyAddedGroceries(
                     groceries = state.recentlyAddedGroceries,
                     onClick = {
@@ -222,6 +240,7 @@ fun AddGrocerySheet(
                     }
                 )
             }
+
             IconButton(
                 modifier = Modifier.padding(0.dp, 16.dp),
                 onClick = {
