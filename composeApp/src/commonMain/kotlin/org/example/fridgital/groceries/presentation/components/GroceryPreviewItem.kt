@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.example.fridgital.groceries.domain.Grocery
 
 @Composable
@@ -22,8 +23,6 @@ fun GroceryPreviewItem(
     modifier: Modifier = Modifier
 ) {
     Column(
-//        modifier = modifier
-//            .clickable (onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         GroceryPhoto(
@@ -36,6 +35,7 @@ fun GroceryPreviewItem(
             text = grocery.title,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
+            lineHeight = 18.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .width(100.dp)
