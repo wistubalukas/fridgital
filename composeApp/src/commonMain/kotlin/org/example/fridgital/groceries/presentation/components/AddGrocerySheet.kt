@@ -50,6 +50,9 @@ fun AddGrocerySheet(
 ) {
     CustomBottomSheet(
         visible = isOpen,
+        onClose = {
+            onEvent(GroceryListEvent.DismissGrocery)
+        },
         modifier = modifier.fillMaxWidth()
     ) {
         Box(
