@@ -41,6 +41,7 @@ fun GroceryShoppingListItem(
 ) {
     Row(
         modifier = Modifier
+            .background(Color(0xFFF7F7F7))
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .height(100.dp)
             .fillMaxWidth(),

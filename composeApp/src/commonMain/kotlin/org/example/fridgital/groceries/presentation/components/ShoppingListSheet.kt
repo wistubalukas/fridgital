@@ -57,6 +57,7 @@ fun ShoppingListSheet(
                                 state.groceries[0],
                                 onEvent
                             )
+                            Spacer(modifier = Modifier.height(8.dp))
                             GroceryShoppingListItem(
                                 state.groceries[1],
                                 onEvent
