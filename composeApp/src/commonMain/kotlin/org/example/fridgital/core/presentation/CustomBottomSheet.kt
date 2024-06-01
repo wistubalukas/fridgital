@@ -27,35 +27,38 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CustomBottomSheet(
     visible: Boolean,
+    swipeEnabled: Boolean = true,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
     // Scroll detection for swipe to close
     var cumulativeDrag by remember { mutableStateOf(0f) }
-    val dragThreshold = 50f
+    val dragThreshold = 80f
 
-    val nestedScrollConnection = object : NestedScrollConnection {
-        override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-            if (available.y > 0) {
-                cumulativeDrag += available.y
-                if (cumulativeDrag > dragThreshold) {
-                    onClose()
-                    cumulativeDrag = 0f
+    val nestedScrollConnection = remember(swipeEnabled) {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                if (swipeEnabled && available.y > 0) {
+                    cumulativeDrag += available.y
+                    if (cumulativeDrag > dragThreshold) {
+                        onClose()
+                        cumulativeDrag = 0f
+                    }
                 }
+                return super.onPreScroll(available, source)
             }
-            return super.onPreScroll(available, source)
-        }
 
-        override fun onPostScroll(
-            consumed: Offset,
-            available: Offset,
-            source: NestedScrollSource
-        ): Offset {
-            if (consumed.y.toInt() == 0 && available.y > 0) {
-                cumulativeDrag = 0f  // Reset the cumulative drag when the user stops dragging
+            override fun onPostScroll(
+                consumed: Offset,
+                available: Offset,
+                source: NestedScrollSource
+            ): Offset {
+                if (swipeEnabled && consumed.y.toInt() == 0 && available.y > 0) {
+                    cumulativeDrag = 0f  // Reset the cumulative drag when the user stops dragging
+                }
+                return super.onPostScroll(consumed, available, source)
             }
-            return super.onPostScroll(consumed, available, source)
         }
     }
 

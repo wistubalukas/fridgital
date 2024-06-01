@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -29,6 +31,7 @@ fun ShoppingListSheet(
     state: GroceryListState,
     newGrocery: Grocery?,
     isOpen: Boolean,
+    swipeToCloseEnabled: Boolean,
     onEvent: (GroceryListEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -37,10 +40,13 @@ fun ShoppingListSheet(
         onClose = {
             onEvent(GroceryListEvent.DismissGrocery)
         },
+        swipeEnabled = swipeToCloseEnabled,
         modifier = modifier.fillMaxWidth()
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
             contentAlignment = Alignment.TopStart
         ) {
             Column(
@@ -48,33 +54,40 @@ fun ShoppingListSheet(
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(Modifier.height(70.dp))
-                // TODO: change to LazyColumn with shopping list items (groceries with inFridge = false)
-                Column(
+                Spacer(Modifier.height(72.dp))
+                LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    if (state.groceries.isNotEmpty()) {
-                        // item {
-                            GroceryShoppingListItem(
-                                state.groceries[0],
-                                onEvent
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            GroceryShoppingListItem(
-                                state.groceries[1],
-                                onEvent
-                            )
-                        // }
+                    item { Spacer(Modifier.height(8.dp)) }
+                    items(state.groceries) { grocery ->
+                        GroceryShoppingListItem(
+                            grocery,
+                            onEvent
+                        )
                     }
+                    // space to the bottom for the add button
+                    item { Spacer(Modifier.height(72.dp)) }
                 }
-                // Add new grocery to shopping list button
+            }
+            // Add new grocery to shopping list component
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomStart)
+                    .background(Color.White)
+                    .padding(vertical = 16.dp)
+            ) {
+                /* todo: add form to create a new shopping list grocery item
+                    which will be expanded from bottom to top when clicking on the add button
+                 */
+                // add button
                 IconButton(
                     onClick = {
                         onEvent(GroceryListEvent.DismissGrocery)
                     },
                     modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .padding(horizontal = 16.dp)
                         .height(48.dp)
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(15))

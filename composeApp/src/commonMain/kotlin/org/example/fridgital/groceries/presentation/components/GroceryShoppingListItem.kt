@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,6 +34,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.example.fridgital.groceries.domain.Grocery
 import org.example.fridgital.groceries.presentation.GroceryListEvent
+
+/* todo: add logic to make every item editable at the current position in the list
+    by clicking on the edit button of the item
+*/
 
 @Composable
 fun GroceryShoppingListItem(
@@ -188,4 +193,5 @@ fun GroceryShoppingListItem(
             )
         }
     }
+    Spacer(modifier = Modifier.height(8.dp))
 }
