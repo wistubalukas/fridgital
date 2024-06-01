@@ -121,10 +121,10 @@ fun GroceryListScreen(
                     }
 
                     // counter in a bubble at the top left of the FAB
-                    /* TODO: enable when shopping list is implemented
+                    /* TODO: adjust when shopping list is implemented
                         and fill counter in Text Composable dynamically
                      */
-                    // if (state.groceries.isNotEmpty()) {
+                    if (state.groceries.isNotEmpty()) {
                         Box(
                             modifier = Modifier
                                 .align(Alignment.TopStart)
@@ -134,12 +134,12 @@ fun GroceryListScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "2",
+                                text = "${state.groceries.size}",
                                 color = Color.White,
                                 style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
                             )
                         }
-                    // }
+                    }
                 }
             }
         }
@@ -219,6 +219,7 @@ fun GroceryListScreen(
         state = state,
         newGrocery = newGrocery,
         isOpen = state.isShoppingListOpen,
-        onEvent = onEvent
+        onEvent = onEvent,
+        swipeToCloseEnabled = false
     )
 }
